@@ -1,146 +1,30 @@
 # AGENTS.md
 
-## Project Purpose
+## Project
 
-This repository implements a browser-first mathematical relation explorer for audible signals.
+Audio Visualizer is a browser-first mathematical relation explorer for audible signals.
 
 It is not a DAW.
 
-Primary goal:
+Primary product relation:
 
-`generate signal → hear signal → observe actual samples → apply explicit relation → render geometry`
+`generate signal → hear signal → observe runtime samples → apply explicit relation → render geometry`
 
----
+## Project Authority
 
-## Project Authority Chain
+This repository contains **project-specific specification and authority only**. Workflow, orchestration, escalation, and general engineering operating instructions are external to this harness.
 
-The project preserves this explicit provenance chain:
+Authoritative project documents:
 
-```text
-Lean ideal model
-        ↓
-explicit sampling / discretization bridge
-        ↓
-Python numerical reference
-        ↓
-runtime contract + tests
-        ↓
-TypeScript / Web Audio implementation
-        ↓
-AudioWorklet sample tap
-        ↓
-p5.js visualization
-```
+* `harness/project-spec/project-spec.md` — required product behavior, MVP boundary, stack, and runtime constraints.
+* `harness/project-spec/authority.md` — canonical mathematical/runtime authority chain, provenance classes, bridge rules, and semantic boundaries.
+* `harness/project-spec/decision-register.md` — locked, deferred, and explicitly open project decisions.
+* `harness/project-spec/mvp-implementation-plan.md` — project-specific MVP dependency order and acceptance gates.
 
-All decisions should first defer to the above auth models and their relevant/associated sources and documentation before bringing a human into the loop.
+These documents have distinct scopes.
 
-### Lean
+`mvp-implementation-plan.md` may not redefine the project specification, authority model, or locked decisions.
 
-Licenses claims about the **ideal mathematical object**.
+A contradiction among the specification, authority model, and locked decisions is a harness defect; do not resolve it by treating implementation, tests, or inference as higher project authority.
 
-### Python
-
-Predicts finite-sample behaviour and quantifies numerical approximation/error under explicit discretization assumptions.
-
-### TypeScript / Web Audio
-
-Produces the **actual runtime signal**.
-
-Agreement with Python must be established through runtime contracts and tests, not assumed from equivalent formulas.
-
-### AudioWorklet
-
-Observes concrete runtime samples and preserves their audio-timeline identity.
-
-### p5.js
-
-Renders geometry of the **ideal mathematical object**, derived from observed samples.
-
-It has no authority to infer or regenerate what the signal should look like.
-
-The arrows are explicit bridges, not equality claims.
-
----
-
-## Repository Document Precedence
-
-When repository instructions conflict, use:
-
-1. `harness/project-spec/project-spec.md`
-2. `harness/project-spec/authority.md`
-3. `harness/project-spec/decision-register.md`
-4. `harness/project-spec/mvp-implementation-plan.md`
-5. `harness/canon/*`
-6. tests and accepted runtime contracts
-7. existing implementation
-8. local conventions and agent inference
-
-This is **instruction precedence**, not the mathematical/runtime authority chain above.
-
-Existing code does not override the harness.
-
-If implementation conflicts with a locked decision, surface the conflict rather than silently preserving existing behavior.
-
----
-
-## Critical Rules
-
-* The visualizer must derive geometry from actual runtime samples.
-* p5 must not independently recreate what the signal is expected to look like.
-* Audio time is authoritative over UI/render time.
-* Do not hardcode sample rate.
-* Do not assume AudioWorklet blocks are permanently 128 samples.
-* Integer sample delay is the MVP primitive.
-* Do not silently approximate fractional delay.
-* Keep signal transformations separate from representational transformations.
-* Preserve distinctions between ideal, numerical-reference, runtime-observed, and rendered results.
-* Do not broaden Lean formalization merely because a mathematical definition exists.
-* Do not add infrastructure for hypothetical future complexity.
-
----
-
-## Scope Control
-
-Explicitly deferred unless evidence justifies promotion:
-
-* MIDI
-* SharedArrayBuffer
-* WebGL/WebGPU
-* WASM DSP
-* arbitrary node graph
-* desktop packaging
-* presets/session system
-* DAW functionality
-
-Do not implement deferred features opportunistically.
-
----
-
-## Change Classification
-
-Before modifying behavior, classify the change as:
-
-* implementation defect
-* conformance repair
-* mechanical cleanup
-* new design choice
-* scope expansion
-
-Do not disguise a new design choice as cleanup.
-
-New design choices affecting locked authority boundaries require an explicit harness update.
-
----
-
-## Testing Expectations
-
-Tests must state what they establish.
-
-* Lean theorem → ideal mathematical relation
-* Python fixture → numerical reference behaviour
-* `OfflineAudioContext` / runtime test → Web Audio implementation behaviour
-* UI test → application/render behaviour
-
-One evidence class must not be described as proving another.
-
----
+Existing implementation does not override the harness.

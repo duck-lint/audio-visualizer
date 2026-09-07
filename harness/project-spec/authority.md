@@ -28,6 +28,17 @@ p5 visualization
 
 The arrows are bridges, not equality signs.
 
+### Multi-stream runtime observation
+
+A projection comparing multiple runtime signals must identify each observed
+signal by source and pair samples on the shared audio timeline.
+
+Message arrival time, UI time, and render-frame identity do not establish
+sample correspondence.
+
+Observation transport must preserve enough information to detect gaps and
+establish sample identity.
+
 ---
 
 ## 3. Layer Responsibilities
@@ -87,6 +98,8 @@ p5 receives coordinates and renders them.
 **Rendering is observational, not generative.**
 
 p5 must not infer what a signal “should” look like and substitute synthetic geometry.
+
+p5 renders a representation derived from runtime-observed samples after an explicit projection. It does not render or instantiate the ideal mathematical object.
 
 ---
 
@@ -198,6 +211,8 @@ In particular, distinguish:
 * display rotation
 
 There is no generic authoritative `phase` control.
+
+A derived delay phase is meaningful only relative to a declared reference frequency. It is not a global phase property of a multi-frequency signal.
 
 ---
 
