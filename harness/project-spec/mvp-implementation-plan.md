@@ -10,15 +10,10 @@ Do not build broad infrastructure ahead of demonstrated need.
 
 ---
 
-## Slice 0 — Repository Harness
+## Slice 0 — Repository Setup
 
 ### Deliver
 
-* `SPEC.md`
-* `AUTHORITY.md`
-* `DECISIONS.md`
-* `IMPLEMENTATION_PLAN.md`
-* `AGENTS.md`
 * TypeScript + Vite application shell
 * Python reference area
 * Lean project / mathlib setup

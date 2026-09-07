@@ -1,3 +1,5 @@
+# AGENTS.md
+
 ## Project Purpose
 
 This repository implements a browser-first mathematical relation explorer for audible signals.
@@ -10,49 +12,74 @@ Primary goal:
 
 ---
 
-## Authority Hierarchy
+## Project Authority Chain
 
-When sources conflict, use this order:
+The project preserves this explicit provenance chain:
 
-1. `SPEC.md` — product scope and required behavior
-2. `AUTHORITY.md` — semantic, mathematical, and provenance boundaries
-3. `DECISIONS.md` — locked, deferred, and open design decisions
-4. `IMPLEMENTATION_PLAN.md` — current implementation sequence
-5. tests and accepted runtime contracts
-6. existing implementation
-7. local conventions and agent inference
+```text
+Lean ideal model
+        ↓
+explicit sampling / discretization bridge
+        ↓
+Python numerical reference
+        ↓
+runtime contract + tests
+        ↓
+TypeScript / Web Audio implementation
+        ↓
+AudioWorklet sample tap
+        ↓
+p5.js visualization
+```
+
+All decisions should first defer to the above auth models and their relevant/associated sources and documentation before bringing a human into the loop.
+
+### Lean
+
+Licenses claims about the **ideal mathematical object**.
+
+### Python
+
+Predicts finite-sample behaviour and quantifies numerical approximation/error under explicit discretization assumptions.
+
+### TypeScript / Web Audio
+
+Produces the **actual runtime signal**.
+
+Agreement with Python must be established through runtime contracts and tests, not assumed from equivalent formulas.
+
+### AudioWorklet
+
+Observes concrete runtime samples and preserves their audio-timeline identity.
+
+### p5.js
+
+Renders geometry of the **ideal mathematical object**, derived from observed samples.
+
+It has no authority to infer or regenerate what the signal should look like.
+
+The arrows are explicit bridges, not equality claims.
+
+---
+
+## Repository Document Precedence
+
+When repository instructions conflict, use:
+
+1. `harness/project-spec/project-spec.md`
+2. `harness/project-spec/authority.md`
+3. `harness/project-spec/decision-register.md`
+4. `harness/project-spec/mvp-implementation-plan.md`
+5. `harness/canon/*`
+6. tests and accepted runtime contracts
+7. existing implementation
+8. local conventions and agent inference
+
+This is **instruction precedence**, not the mathematical/runtime authority chain above.
 
 Existing code does not override the harness.
 
 If implementation conflicts with a locked decision, surface the conflict rather than silently preserving existing behavior.
-
----
-
-## Mathematical Authority
-
-Keep these layers distinct:
-
-### Lean
-
-Ideal mathematical definitions and selected verified relations.
-
-### Python
-
-Numerical reference implementation, discretization experiments, error analysis, and fixtures.
-
-### TypeScript / Web Audio
-
-Actual runtime implementation.
-
-### AudioWorklet
-
-Observation boundary for concrete runtime samples.
-
-### p5.js
-
-Rendering only.
-
-Do not treat agreement between layers as automatic.
 
 ---
 
@@ -66,7 +93,7 @@ Do not treat agreement between layers as automatic.
 * Integer sample delay is the MVP primitive.
 * Do not silently approximate fractional delay.
 * Keep signal transformations separate from representational transformations.
-* Preserve distinctions between ideal, numerical, runtime-observed, and rendered results.
+* Preserve distinctions between ideal, numerical-reference, runtime-observed, and rendered results.
 * Do not broaden Lean formalization merely because a mathematical definition exists.
 * Do not add infrastructure for hypothetical future complexity.
 
@@ -91,7 +118,7 @@ Do not implement deferred features opportunistically.
 
 ## Change Classification
 
-Before modifying behavior, identify the change as one of:
+Before modifying behavior, classify the change as:
 
 * implementation defect
 * conformance repair
@@ -101,7 +128,7 @@ Before modifying behavior, identify the change as one of:
 
 Do not disguise a new design choice as cleanup.
 
-New design choices that affect locked authority boundaries require an explicit harness update.
+New design choices affecting locked authority boundaries require an explicit harness update.
 
 ---
 
@@ -109,34 +136,11 @@ New design choices that affect locked authority boundaries require an explicit h
 
 Tests must state what they establish.
 
-Examples:
-
-* Lean theorem → ideal relation
-* Python fixture → numerical reference
-* `OfflineAudioContext` test → browser runtime behavior
-* UI test → application/render behavior
+* Lean theorem → ideal mathematical relation
+* Python fixture → numerical reference behaviour
+* `OfflineAudioContext` / runtime test → Web Audio implementation behaviour
+* UI test → application/render behaviour
 
 One evidence class must not be described as proving another.
 
 ---
-
-## Agent Working Style
-
-Prefer:
-
-* small vertical slices
-* explicit interfaces
-* deterministic tests
-* descriptive names
-* comments explaining why
-* measured evidence before optimization
-
-Avoid:
-
-* speculative abstractions
-* compatibility paths not required by the harness
-* silent fallbacks
-* duplicated mathematical semantics without provenance
-* premature generalized frameworks
-
-When uncertain, preserve the seam and surface the decision rather than collapsing it.
