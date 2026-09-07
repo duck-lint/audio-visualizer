@@ -242,6 +242,6 @@ Verify:
 
 ### MVP Completion
 
-MVP is complete when the acceptance criteria in `SPEC.md` are satisfied.
+MVP is complete when the acceptance criteria in `harness/project-spec/project-spec.md` are satisfied.
 
 ---

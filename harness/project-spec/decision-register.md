@@ -47,8 +47,8 @@ Status values:
 | Lean phase representation      | Raw radians vs `Real.Angle`               | OPEN           |
 | Browser support contract       | Current stable desktop Chromium   | LOCKED           |
 | Extra browser support contracts   | Firefox/Safari support   | DEFERRED         |
-| Fractional-delay interpolation | Method and guarantees                     | OPEN after MVP |
-| GPU renderer migration         | Only after measured P2D bottleneck        | OPEN after MVP |
+| Fractional-delay interpolation | Method and guarantees                     | DEFERRED |
+| GPU renderer migration         | Only after measured P2D bottleneck        | DEFERRED |
 | Worklet transport       | Batched MessagePort + transferable buffers | LOCKED |
 | Observation identity    | Named stream + audio-timeline sample index  | LOCKED |
 | Cross-stream pairing    | Pair by audio sample identity, never arrival/render time | LOCKED |

@@ -76,6 +76,8 @@ Each supports:
 * initial phase
 * mute
 
+Initial phase is the source waveform's phase offset relative to its activation point on the audio timeline. It is distinct from projection delay phase, filter phase response, and display rotation.
+
 ### Signal processing
 
 MVP includes:
