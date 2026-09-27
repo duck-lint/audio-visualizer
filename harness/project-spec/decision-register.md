@@ -15,6 +15,10 @@ Status values:
 | Formal layer                   | Lean + mathlib                            | LOCKED           |
 | Formal scope                   | Small stable kernel only                  | LOCKED           |
 | Numerical layer                | Python reference + fixtures               | LOCKED           |
+| Development witness            | Small interactive Python numerical view   | LOCKED           |
+| Witness authority              | Numerical/human-inspection only           | LOCKED           |
+| Formal foundation gate         | Lean kernel + Python witness before runtime feature implementation | LOCKED |
+| Initial formal kernel scope     | Continuous signal, sine, gain, mix, causal delay, delayed-self projection, canonical sine theorems | LOCKED |
 | Audio engine                   | Web Audio API                             | LOCKED           |
 | Sample observation             | AudioWorklet                              | LOCKED           |
 | Visual source                  | Actual runtime samples                    | LOCKED           |
@@ -23,8 +27,9 @@ Status values:
 | Node.js responsibility         | Tooling/build/tests only                  | LOCKED           |
 | Build system                   | Vite                                      | LOCKED           |
 | Sample rate                    | Runtime `AudioContext.sampleRate`         | LOCKED           |
-| Delay primitive                | Integer sample count                      | LOCKED           |
+| Delay primitive                | Nonnegative integer sample lag `k ≥ 0`    | LOCKED           |
 | Delay ms/phase                 | Derived values                            | LOCKED           |
+| Delay semantics                 | Causal lag: `D_τ(s)(t)=s(t-τ)`; discrete `D_k(s)[n]=s[n-k]` | LOCKED |
 | Fractional delay               | Separate future transform                 | DEFERRED          |
 | Worklet quantum                | Variable-length handling                  | LOCKED           |
 | Audio/render relationship      | Audio timeline authoritative              | LOCKED           |
