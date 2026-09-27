@@ -95,7 +95,7 @@ MVP includes:
 
    `x[n] = s[n]`
 
-   `y[n] = s[n+k]`
+   `y[n] = D_k(s)[n] = s[n-k]`, for `k ≥ 0`
 
 2. oscillator A vs oscillator B
 
@@ -122,21 +122,49 @@ Where applicable, surface:
 * ideal-model status
 * runtime/numerical status
 
+### Development witness
+
+A small interactive Python numerical witness is a required development artifact.
+
+It must:
+
+* consume the Python numerical reference rather than duplicate signal mathematics;
+* expose sine amplitude, frequency, source phase, and nonnegative lag;
+* show source and delayed waveforms plus the XY projection;
+* provide canonical zero-, quarter-, and half-cycle cases;
+* show numerical error against an ideal relation when that relation is defined.
+
+The witness is not product UI. It provides human-inspectable numerical evidence and does not establish formal or runtime truth.
+
 ---
 
 ## 5. Delay Semantics
 
-The MVP primitive is:
+Delay uses the causal lag convention.
 
-`delaySamples : integer`
+Ideal continuous delay:
+
+`D_τ(s)(t) = s(t - τ)`, for `τ ≥ 0`.
+
+MVP discrete delay:
+
+`D_k(s)[n] = s[n-k]`, for nonnegative integer `k`.
+
+The delayed-self projection is:
+
+`x[n] = s[n]`
+
+`y[n] = D_k(s)[n]`
 
 with:
 
-`delaySeconds = delaySamples / sampleRate`
+`delaySeconds = k / sampleRate`
 
-and:
+and lag magnitude at reference frequency `f`:
 
-`phaseRadians = 2π × frequency × delaySeconds`
+`phaseLagRadians = 2π × f × delaySeconds`
+
+For a sine, Y's phase relative to X is `-phaseLagRadians`.
 
 Fractional delay is NOT silently approximated.
 
@@ -144,7 +172,32 @@ If later introduced, fractional delay is a distinct interpolating transformation
 
 ---
 
-## 6. Research-Grounded Runtime Constraints
+## 6. Formal Kernel Contract
+
+Before runtime feature implementation, the Lean/mathlib foundation must define only the stable ideal objects required by the MVP:
+
+* continuous signal: `Signal := ℝ → ℝ`;
+* sinusoid with amplitude, frequency or angular frequency, and source phase;
+* gain;
+* signal mixing;
+* causal delay `D_τ(s)(t) = s(t - τ)`;
+* delayed-self projection `(s(t), D_τ(s)(t))`.
+
+It must establish at minimum:
+
+* zero-delay identity;
+* delay composition;
+* zero-lag sine projection: `y = x`;
+* half-cycle sine projection: `y = -x`;
+* quarter-cycle sine projection: `x² + y² = A²`.
+
+Where practical, canonical sine theorems should state phase displacement as a condition such as `ωτ = π/2` rather than requiring division by frequency.
+
+The foundation does NOT formalize sampling, floating-point execution, Python, Web Audio, browser behavior, p5 rendering, filters, or non-sinusoidal runtime oscillator realization.
+
+---
+
+## 7. Research-Grounded Runtime Constraints
 
 The implementation MUST account for the following:
 
@@ -160,7 +213,7 @@ The implementation MUST account for the following:
 
 ---
 
-## 7. Testing
+## 8. Testing
 
 Use distinct evidence at each layer:
 
@@ -171,6 +224,10 @@ Verify selected ideal mathematical relations.
 ### Python
 
 Generate numerical reference cases and quantify discretization error.
+
+### Development witness
+
+Provide a human-inspectable view of the Python numerical reference. Visual inspection is a sanity/comprehension check, not formal proof or runtime evidence.
 
 ### TypeScript
 
@@ -192,7 +249,7 @@ Verify:
 
 ---
 
-## 8. MVP Acceptance Criteria
+## 9. MVP Acceptance Criteria
 
 MVP is achieved when:
 
@@ -205,11 +262,13 @@ MVP is achieved when:
 7. filter and waveshaper transformations can be observed;
 8. ideal, numerical, and runtime claims remain distinguishable;
 9. the application works from a production browser build;
-10. no DAW/session/timeline architecture is required.
+10. no DAW/session/timeline architecture is required;
+11. the required Lean kernel builds and its canonical sine/delay theorems are proved;
+12. the development witness runs the canonical zero-, quarter-, and half-cycle numerical cases.
 
 ---
 
-## 9. Explicit Non-Goals for MVP
+## 10. Explicit Non-Goals for MVP
 
 Do not add:
 
