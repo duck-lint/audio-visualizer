@@ -77,6 +77,12 @@ Python owns:
 
 Python results are numerical evidence, not formal proof.
 
+#### Development witness — numerical inspection surface
+
+The development witness is a view over the Python numerical reference layer. It must consume the same reference functions/data rather than independently reimplement signal semantics.
+
+Human inspection of the witness can establish that a numerical result is intelligible and visibly consistent with expectations. It cannot establish an ideal theorem or runtime Web Audio behavior.
+
 ### TypeScript / Web Audio — runtime authority
 
 The running application owns the concrete signal actually generated.
@@ -214,6 +220,8 @@ There is no generic authoritative `phase` control.
 
 A derived delay phase is meaningful only relative to a declared reference frequency. It is not a global phase property of a multi-frequency signal.
 
+Delay/lag uses the causal convention `D_τ(s)(t) = s(t - τ)` for `τ ≥ 0`. A positive delay never denotes a future sample or positive-time lead.
+
 ---
 
 ## 8. Formalization Admission Rule
@@ -227,6 +235,8 @@ An operation or theorem enters Lean only when:
 Experimental ideas may exist solely in Python or TypeScript.
 
 **Proof is not a prerequisite for experimentation.**
+
+The initial Lean foundation is restricted to the continuous signal, sinusoid, gain, mixing, causal delay, delayed-self projection, and canonical sine relations required by the project specification. Sampling, runtime DSP, rendering, filters, and non-sinusoidal runtime realization remain outside that foundation.
 
 ---
 
